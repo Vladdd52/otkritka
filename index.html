@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>С днём рождения, Севинчик!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Marck+Script&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white: #fffbfc;
+    --blush: #ffe3ee;
+    --rose: #f6b8d1;
+    --rose-deep: #e78fb3;
+    --gold: #d9b48a;
+    --ink: #5c4552;
+    --ink-soft: #8a7480;
+  }
+
+  *{box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
+
+  html{ height:100%; }
+
+  body{
+    margin:0; padding:0;
+    min-height:100vh;
+    min-height:100dvh;
+    background: linear-gradient(160deg,#f2e3ea 0%, #e9e4ee 100%);
+    font-family:'Manrope', sans-serif;
+    display:flex; align-items:center; justify-content:center;
+    padding: 24px 14px;
+  }
+
+  .card{
+    position:relative;
+    width:100%;
+    max-width: 420px;
+    background: var(--white);
+    border-radius: 28px;
+    box-shadow: 0 30px 60px -20px rgba(120,60,90,0.28), 0 0 0 1px rgba(255,255,255,0.6) inset;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* On phones: fill the whole screen edge-to-edge, no floating card */
+  @media (max-width: 520px){
+    body{
+      padding: 0;
+      align-items: stretch;
+    }
+    .card{
+      max-width: none;
+      min-height: 100vh;
+      min-height: 100dvh;
+      border-radius: 0;
+      box-shadow: none;
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+  }
+
+  /* petals background */
+  .petals{
+    position:absolute; inset:0; pointer-events:none; z-index:5; overflow:hidden;
+  }
+  .petal{
+    position:absolute; top:-30px;
+    font-size:16px;
+    color: var(--rose-deep);
+    opacity:0.55;
+    animation: fall linear infinite;
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.05));
+  }
+  @keyframes fall{
+    0%{ transform: translateY(-40px) translateX(0) rotate(0deg); opacity:0; }
+    10%{ opacity:0.6; }
+    90%{ opacity:0.5; }
+    100%{ transform: translateY(920px) translateX(var(--drift, 30px)) rotate(360deg); opacity:0; }
+  }
+
+  /* carousel */
+  .carousel{
+    position:relative;
+    width:100%;
+    aspect-ratio: 4 / 5;
+    background: #f4dbe5;
+    overflow:hidden;
+  }
+  .slides{
+    position:absolute; inset:0;
+    display:flex;
+    width:300%;
+    height:100%;
+    transition: transform 0.9s cubic-bezier(.65,.05,.36,1);
+  }
+  .slide{
+    position:relative;
+    width: 33.3333%;
+    height:100%;
+    background: linear-gradient(150deg,#fbe6ee, #f2c6d9);
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+  }
+  .slide img{
+    width:100%; height:100%; object-fit:cover; display:block;
+  }
+
+  .carousel-fade-top{
+    position:absolute; left:0; right:0; top:0; height:56px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.35), rgba(255,255,255,0));
+    z-index:3; pointer-events:none;
+  }
+  .carousel-fade-bottom{
+    position:absolute; left:0; right:0; bottom:0; height:70px;
+    background: linear-gradient(to top, rgba(255,251,252,0.95), rgba(255,251,252,0));
+    z-index:3; pointer-events:none;
+  }
+
+  .dots{
+    position:absolute; bottom:14px; left:0; right:0;
+    display:flex; justify-content:center; gap:7px; z-index:4;
+  }
+  .dot{
+    width:6px; height:6px; border-radius:50%;
+    background: rgba(255,255,255,0.6);
+    transition: all 0.35s ease;
+  }
+  .dot.active{
+    width:18px; border-radius:5px;
+    background: #fff;
+  }
+
+  /* content below carousel */
+  .content{
+    flex: 1 1 auto;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding: 28px 26px 30px;
+    position:relative;
+    text-align:center;
+    background: var(--white);
+  }
+
+  @media (max-width: 520px){
+    .carousel{
+      aspect-ratio: unset;
+      flex: 0 0 auto;
+      height: 46vh;
+      height: 46dvh;
+    }
+  }
+
+  .eyebrow{
+    font-size:11px;
+    letter-spacing: 0.28em;
+    text-transform:uppercase;
+    color: var(--rose-deep);
+    font-weight:600;
+    margin-bottom: 10px;
+  }
+
+  .greeting{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:600;
+    font-style:italic;
+    color: var(--ink);
+    font-size: clamp(28px, 6vw, 34px);
+    line-height:1.15;
+    margin:0;
+  }
+
+  .name{
+    font-family:'Marck Script', cursive;
+    font-size: clamp(40px, 10vw, 52px);
+    color: var(--rose-deep);
+    margin: 2px 0 12px;
+    line-height:1;
+  }
+
+  .wish{
+    font-size:14px;
+    color: var(--ink-soft);
+    line-height:1.65;
+    max-width: 300px;
+    font-weight:400;
+  }
+
+  .divider{
+    display:flex; align-items:center; gap:8px;
+    margin: 14px 0;
+    color: var(--gold);
+  }
+  .divider .line{ width:26px; height:1px; background: var(--rose);}
+
+  /* music control */
+  .music-bar{
+    margin: 22px auto 4px;
+    display:flex; align-items:center; gap:10px;
+    background: var(--blush);
+    border-radius: 30px;
+    padding: 8px 18px 8px 8px;
+    width: fit-content;
+  }
+  .music-btn{
+    width:32px; height:32px; border-radius:50%;
+    background: var(--rose-deep);
+    border:none; display:flex; align-items:center; justify-content:center;
+    color:#fff; cursor:pointer; flex-shrink:0;
+  }
+  .music-btn svg{ width:14px; height:14px; }
+  .music-label{
+    font-size:12px; color: var(--ink); font-weight:600; letter-spacing:0.02em;
+  }
+  .music-sub{ font-size:10px; color: var(--ink-soft); font-weight:400;}
+
+  .bars{
+    display:flex; align-items:flex-end; gap:2px; height:14px;
+  }
+  .bars span{
+    width:2.5px; background: var(--rose-deep); border-radius:2px;
+    animation: bar 0.9s ease-in-out infinite;
+  }
+  .bars span:nth-child(1){height:5px; animation-delay:0s;}
+  .bars span:nth-child(2){height:12px; animation-delay:0.15s;}
+  .bars span:nth-child(3){height:8px; animation-delay:0.3s;}
+  .paused .bars span{ animation-play-state: paused; height:4px !important;}
+  @keyframes bar{
+    0%,100%{ height:4px;} 50%{ height:13px;}
+  }
+</style>
+</head>
+<body>
+
+  <div class="card" id="card">
+    <div class="petals" id="petals"></div>
+
+    <div class="carousel">
+      <div class="slides" id="slides">
+        <div class="slide"><img src="photo1.jpg" alt="Фото 1"></div>
+        <div class="slide"><img src="photo2.jpg" alt="Фото 2"></div>
+        <div class="slide"><img src="photo3.jpg" alt="Фото 3"></div>
+      </div>
+      <div class="carousel-fade-top"></div>
+      <div class="carousel-fade-bottom"></div>
+      <div class="dots">
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="eyebrow">С праздником</div>
+      <p class="greeting">С днём рождения,</p>
+      <p class="name">Севинчик!</p>
+      <div class="divider">
+        <span class="line"></span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-6.7-4.35-9.3-8.1C.8 9.9 1.7 6.2 5 5c2.1-.8 4.2.2 5.5 2C11.8 5.2 13.9 4.2 16 5c3.3 1.2 4.2 4.9 2.3 7.9C18.7 16.65 12 21 12 21z"/></svg>
+        <span class="line"></span>
+      </div>
+      <p class="wish">Пусть этот год принесёт тебе столько же тепла, света и нежности, сколько ты даришь всем вокруг 🤍</p>
+
+      <div class="music-bar" id="musicBar">
+        <button class="music-btn" id="playBtn">
+          <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <div>
+          <div class="music-label">Нажми, чтобы включить музыку</div>
+          <div class="music-sub" id="trackSub">на паузе</div>
+        </div>
+        <div class="bars paused" id="bars"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+
+    <audio id="audioPlayer" src="music.mp3" loop></audio>
+  </div>
+
+<script>
+  // petals
+  const petalsContainer = document.getElementById('petals');
+  const petalChars = ['🌸','✿','❀'];
+  for(let i=0;i<10;i++){
+    const p = document.createElement('div');
+    p.className='petal';
+    p.textContent = petalChars[i % petalChars.length];
+    p.style.left = (Math.random()*100) + '%';
+    p.style.setProperty('--drift', (Math.random()*60-30)+'px');
+    p.style.animationDuration = (10 + Math.random()*8) + 's';
+    p.style.animationDelay = (Math.random()*10) + 's';
+    p.style.fontSize = (12 + Math.random()*8) + 'px';
+    petalsContainer.appendChild(p);
+  }
+
+  // carousel autoplay
+  const slidesEl = document.getElementById('slides');
+  const dots = document.querySelectorAll('.dot');
+  let current = 0;
+  function goTo(i){
+    current = i;
+    slidesEl.style.transform = `translateX(-${i * 33.3333}%)`;
+    dots.forEach((d,idx)=> d.classList.toggle('active', idx===i));
+  }
+  setInterval(()=>{
+    goTo((current+1) % 3);
+  }, 4000);
+
+  // music: mobile browsers require a tap before audio can play,
+  // so it starts on the first tap anywhere on the card.
+  const audioPlayer = document.getElementById('audioPlayer');
+  const playBtn = document.getElementById('playBtn');
+  const playIcon = document.getElementById('playIcon');
+  const trackSub = document.getElementById('trackSub');
+  const bars = document.getElementById('bars');
+  const card = document.getElementById('card');
+
+  const iconPlay = '<path d="M8 5v14l11-7z"/>';
+  const iconPause = '<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>';
+
+  function playAudio(){
+    audioPlayer.play().then(()=>{
+      playIcon.innerHTML = iconPause;
+      bars.classList.remove('paused');
+      trackSub.textContent = 'играет';
+    }).catch(()=>{ /* file not added yet, or blocked */ });
+  }
+
+  function toggleAudio(){
+    if(audioPlayer.paused){
+      playAudio();
+    } else {
+      audioPlayer.pause();
+      playIcon.innerHTML = iconPlay;
+      bars.classList.add('paused');
+      trackSub.textContent = 'на паузе';
+    }
+  }
+
+  playBtn.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    toggleAudio();
+  });
+
+  // try to start music on first tap anywhere on the card (mobile-friendly)
+  card.addEventListener('click', function firstTap(){
+    if(audioPlayer.paused) playAudio();
+    card.removeEventListener('click', firstTap);
+  }, { once: true });
+</script>
+
+</body>
+</html>
