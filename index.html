@@ -43,18 +43,16 @@
     flex-direction:column;
   }
 
-  /* On phones: fill the whole screen edge-to-edge, no floating card */
+  /* On phones: keep the rounded card look, but size it to fit the screen */
   @media (max-width: 520px){
     body{
-      padding: 0;
+      padding: 14px;
       align-items: stretch;
     }
     .card{
       max-width: none;
-      min-height: 100vh;
-      min-height: 100dvh;
-      border-radius: 0;
-      box-shadow: none;
+      min-height: calc(100vh - 28px);
+      min-height: calc(100dvh - 28px);
       padding-top: env(safe-area-inset-top);
       padding-bottom: env(safe-area-inset-bottom);
     }
@@ -261,7 +259,7 @@
         <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-6.7-4.35-9.3-8.1C.8 9.9 1.7 6.2 5 5c2.1-.8 4.2.2 5.5 2C11.8 5.2 13.9 4.2 16 5c3.3 1.2 4.2 4.9 2.3 7.9C18.7 16.65 12 21 12 21z"/></svg>
         <span class="line"></span>
       </div>
-      <p class="wish">Пусть этот год принесёт тебе столько же тепла, света и нежности, сколько ты даришь всем вокруг 🤍</p>
+      <p class="wish">Пусть этот год принесёт тебе столько же тепла, света и нежности, сколько ты даришь всем вокруг. Обнимаю крепко 🤍</p>
 
       <div class="music-bar" id="musicBar">
         <button class="music-btn" id="playBtn">
